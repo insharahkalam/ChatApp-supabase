@@ -4,22 +4,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signup</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>WhatsApp UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class=" h-screen text-white overflow-hidden">
 
-   <h1>Chat app</h1>
+    <!-- Header -->
+    <h1 class="text-white bg-gray-900 text-3xl px-2 py-2 flex items-center gap-2">
+        <i class="fa-brands fa-whatsapp text-[#20c200]"></i> WhatsApp
+    </h1>
+    <hr class="border-gray-800">
+
+    <!-- MAIN LAYOUT -->
+    <section class="flex h-[92vh]  overflow-hidden shadow-lg">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="px-2 border-r-2 border-gray-800 bg-[#111416] flex flex-col items-center gap-1">
+            <div class="w-11 h-11 flex items-center  bg-[#00a8841f] justify-center rounded-3xl mt-1  cursor-pointer">
+                <!-- <i class="fa-solid fa-user text-gray-300"></i> -->
+
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#e3e3e3">
+                    <path
+                        d="M240-384h336v-72H240v72Zm0-132h480v-72H240v72Zm0-132h480v-72H240v72ZM96-96v-696q0-29.7 21.15-50.85Q138.3-864 168-864h624q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H240L96-96Zm114-216h582v-480H168v522l42-42Zm-42 0v-480 480Z" />
+                </svg>
+            </div>
+
+            <div
+                class="w-11 h-11 flex items-center justify-center rounded-3xl hover:bg-[#00a8841f] text-[#00a884] cursor-pointer">
+                <!-- <i class="fa-solid fa-message"></i> -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#e3e3e3">
+                    <path
+                        d="M763-145q-121-9-229.5-59.5T339-341q-86-86-135.5-194T144-764q-2-21 12.29-36.5Q170.57-816 192-816h136q17 0 29.5 10.5T374-779l24 106q2 13-1.5 25T385-628l-97 98q20 38 46 73t57.97 65.98Q422-361 456-335.5q34 25.5 72 45.5l99-96q8-8 20-11.5t25-1.5l107 23q17 5 27 17.5t10 29.5v136q0 21.43-16 35.71Q784-143 763-145ZM255-600l70-70-17.16-74H218q5 38 14 73.5t23 70.5Zm344 344q35.1 14.24 71.55 22.62Q707-225 744-220v-90l-75-16-70 70ZM255-600Zm344 344Z" />
+                </svg>
+
+            </div>
+
+            <div class="w-11 h-11 flex items-center justify-center rounded-3xl hover:bg-[#00a8841f] cursor-pointer">
+                <!-- <i class="fa-solid fa-plus"></i> -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#e3e3e3">
+                    <path
+                        d="M0-240v-59q0-51 45-80t123-29q15 0 30 1.5t30 4.5q-17 20-26.5 45t-9.5 50.56V-240H0Zm240 0v-61q0-27.86 14.5-50.93T293-387q44-22 91-33.5t95.53-11.5Q529-432 576-420.5t91 33.5q24 12 38.5 35.07T720-301v61H240Zm528 0v-67.37q0-26.95-9.5-50.79T732-402q17-3 31.5-4.5T792-408q78 0 123 29t45 80v59H768Zm-454-72h332q-7-17-59.5-32.5T480-360q-54 0-106.5 15.5T314-312ZM167.79-456Q138-456 117-477.03q-21-21.02-21-50.55Q96-558 117.03-579q21.02-21 50.55-21Q198-600 219-579.24t21 51.45Q240-498 219.24-477t-51.45 21Zm624 0Q762-456 741-477.03q-21-21.02-21-50.55Q720-558 741.03-579q21.02-21 50.55-21Q822-600 843-579.24t21 51.45Q864-498 843.24-477t-51.45 21ZM479.5-480q-49.5 0-84.5-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85.5q0 49.5-35 84.5t-85.5 35Zm.5-72q20.4 0 34.2-13.8Q528-579.6 528-600q0-20.4-13.8-34.2Q500.4-648 480-648q-20.4 0-34.2 13.8Q432-620.4 432-600q0 20.4 13.8 34.2Q459.6-552 480-552Zm0 240Zm0-288Z" />
+                </svg>
+
+            </div>
+
+            <div class="w-11 h-11 flex items-center justify-center rounded-3xl hover:bg-[#00a8841f] cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                    fill="#e3e3e3">
+                    <path
+                        d="m480-276 144-144-51-51-57 57v-150h-72v150l-57-57-51 51 144 144ZM216-624v408h528v-408H216Zm0 480q-29.7 0-50.85-21.15Q144-186.3 144-216v-474q0-14 5.25-27T165-741l54-54q11-11 23.94-16 12.94-5 27.06-5h420q14.12 0 27.06 5T741-795l54 54q10.5 11 15.75 24t5.25 27v474q0 29.7-21.15 50.85Q773.7-144 744-144H216Zm6-552h516l-48-48H270l-48 48Zm258 276Z" />
+                </svg>
+            </div>
+
+            <div class="flex-1"></div>
+
+            <div class="w-11 h-11 flex items-center justify-center rounded-3xl  hover:bg-[#00a8841f] cursor-pointer">
+                <i class="fa-solid fa-gear"></i>
+            </div>
+
+            <div>
+                
+               
+
+                    <div>
+                       
+                        <img  class="w-10 h-10 mb-2 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold" src="https://img.freepik.com/free-photo/turned-gray-laptop-computer_400718-47.jpg?semt=ais_hybrid&w=740&q=80" alt=""></div>
+            </div>
+        </div>
+
+        <!-- CHAT LIST -->
+        <div class="w-[380px] bg-[#111416] flex flex-col px-3 py-1 border-r border-[#1e2428]">
+            <div class="flex justify-between  p-1 items-center">
+                <h1 class="text-3xl">CHAT</h1>
+                <div class="flex items-center justify-center">
+
+                    <div class="hover:bg-gray-800 px-2 py-2 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px"
+                            fill="#e3e3e3">
+                            <path
+                                d="M444-384h72v-132h132v-72H516v-132h-72v132H312v72h132v132ZM96-96v-696q0-29.7 21.15-50.85Q138.3-864 168-864h624q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H240L96-96Zm114-216h582v-480H168v522l42-42Zm-42 0v-480 480Z" />
+                        </svg>
+                    </div>
+                    <div class="hover:bg-gray-800 px-2 py-1.5 rounded-full">
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: #ffffff;"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Search bar -->
+            <div class="flex items-center gap-3 mb-3">
+
+
+                <div class="relative w-full">
+                    <!-- Search Icon -->
+                    <i
+                        class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm opacity-70"></i>
+
+                    <!-- Input -->
+                    <input type="text" placeholder="Search or start a new chat"
+                        class="w-full bg-[#202427] rounded-3xl pl-10 pr-4 py-3 text-gray-300 text-md focus:outline-none placeholder:text-gray-500">
+                </div>
 
 
 
+            </div>
 
+            <!-- Tabs -->
+            <div class="flex gap-2 mb-3">
+                <span class="px-3 py-1 text-xs rounded-full bg-[#00a8841f] text-[#00a884]">All</span>
+                <span
+                    class="px-3 py-1 text-xs rounded-full text-gray-400 border hover:bg-[#00a8841f] hover:text-[#00a884] border-gray-800">Unread</span>
+                <span
+                    class="px-3 py-1 text-xs rounded-full text-gray-400 border hover:bg-[#00a8841f] hover:text-[#00a884] border-gray-800">Favourites</span>
+                <span
+                    class="px-3 py-1 text-xs rounded-full text-gray-400 border hover:bg-[#00a8841f] hover:text-[#00a884] border-gray-800">Groups</span>
+            </div>
 
+            <!-- Chats -->
+            <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-800">
+                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold">
+                        S</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold">Shazme Zong</p>
+                            <p class="text-xs text-gray-400">6:59 pm</p>
+                        </div>
+                        <p class="text-gray-400 text-sm">📞 Voice call</p>
+                    </div>
+                </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="app.js"></script>
+                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-yellow-400 to-green-400 font-bold">
+                        J</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold">Jaweria SMIT</p>
+                            <p class="text-xs text-gray-400">6:10 pm</p>
+                        </div>
+                        <p class="text-gray-400 text-sm">✔✔ addEventListener me mouseOv...</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
+                    <div
+                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-red-400 to-pink-400 font-bold">
+                        م</div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold">تسبیحات صبح شام کے...</p>
+                            <p class="text-xs text-gray-400">5:15 pm</p>
+                        </div>
+                        <p class="text-gray-400 text-sm">~ mir39633: 🟠 Sticker</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="flex-1 bg-[#0f1316] flex flex-col items-center justify-center">
+            <div class="text-center text-gray-400 max-w-lg">
+                <div class="mb-6">
+                    <i class="fa-brands fa-whatsapp text-[#00A884] text-6xl opacity-40"></i>
+                </div>
+                <h1 class="text-3xl font-semibold text-white mb-2">WhatsApp for Windows</h1>
+                <p class="text-sm mb-6 leading-relaxed">
+                    Send and receive messages without keeping your phone online.<br>
+                    Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
+                </p>
+                <div class="flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-lock text-gray-400"></i>
+                    <span>Your personal messages are end-to-end encrypted</span>
+                </div>
+            </div>
+
+            <div class="absolute bottom-4 text-gray-500 text-xs">
+                <i class="fa-regular fa-clock"></i> Last seen today • 8:18 PM
+            </div>
+        </div>
+
+    </section>
+
 </body>
 
 </html>
