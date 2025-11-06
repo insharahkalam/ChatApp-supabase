@@ -21,7 +21,8 @@
     <hr class="border-gray-800">
 
     <!-- MAIN LAYOUT -->
-    <section class="flex h-[92vh]  overflow-hidden shadow-lg">
+    <section class="flex h-[92vh] overflow-hidden shadow-lg flex-col sm:flex-row">
+
 
         <!-- LEFT SIDEBAR -->
         <div class="px-2 border-r-2 border-gray-800 bg-[#111416] flex flex-col items-center gap-1">
@@ -71,17 +72,23 @@
             </div>
 
             <div>
-                
-               
 
-                    <div>
-                       
-                        <img  class="w-10 h-10 mb-2 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold" src="https://img.freepik.com/free-photo/turned-gray-laptop-computer_400718-47.jpg?semt=ais_hybrid&w=740&q=80" alt=""></div>
+
+
+                <div>
+
+                    <img class="w-7 h-7 mb-4 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold"
+                        src="https://img.freepik.com/free-photo/turned-gray-laptop-computer_400718-47.jpg?semt=ais_hybrid&w=740&q=80"
+                        alt="">
+                </div>
             </div>
         </div>
 
         <!-- CHAT LIST -->
-        <div class="w-[380px] bg-[#111416] flex flex-col px-3 py-1 border-r border-[#1e2428]">
+       
+<div id="chatList"
+  class="w-full sm:w-[380px] bg-[#111416] flex flex-col px-3 py-1 border-r border-[#1e2428] sm:block">
+
             <div class="flex justify-between  p-1 items-center">
                 <h1 class="text-3xl">CHAT</h1>
                 <div class="flex items-center justify-center">
@@ -128,21 +135,11 @@
             </div>
 
             <!-- Chats -->
-            <div class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-800">
-                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
-                    <div
-                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold">
-                        S</div>
-                    <div class="flex-1">
-                        <div class="flex justify-between items-center">
-                            <p class="font-semibold">Shazme Zong</p>
-                            <p class="text-xs text-gray-400">6:59 pm</p>
-                        </div>
-                        <p class="text-gray-400 text-sm">📞 Voice call</p>
-                    </div>
-                </div>
+            <div id="showAllUsers" class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-800">
 
-                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
+
+                <div
+                    class="flex items-center gap-3 p-3 border-b-2 border-gray-900 hover:bg-[#ffffff05] rounded cursor-pointer">
                     <div
                         class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-yellow-400 to-green-400 font-bold">
                         J</div>
@@ -151,48 +148,124 @@
                             <p class="font-semibold">Jaweria SMIT</p>
                             <p class="text-xs text-gray-400">6:10 pm</p>
                         </div>
-                        <p class="text-gray-400 text-sm">✔✔ addEventListener me mouseOv...</p>
+                        <p class="text-gray-400 text-sm">✔addEventListener me mouseOv...</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3 p-3 hover:bg-[#ffffff05] rounded-xl cursor-pointer">
-                    <div
-                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-red-400 to-pink-400 font-bold">
-                        م</div>
-                    <div class="flex-1">
-                        <div class="flex justify-between items-center">
-                            <p class="font-semibold">تسبیحات صبح شام کے...</p>
-                            <p class="text-xs text-gray-400">5:15 pm</p>
-                        </div>
-                        <p class="text-gray-400 text-sm">~ mir39633: 🟠 Sticker</p>
-                    </div>
-                </div>
+
             </div>
         </div>
 
+
+      
         <!-- RIGHT PANEL -->
-        <div class="flex-1 bg-[#0f1316] flex flex-col items-center justify-center">
-            <div class="text-center text-gray-400 max-w-lg">
-                <div class="mb-6">
-                    <i class="fa-brands fa-whatsapp text-[#00A884] text-6xl opacity-40"></i>
-                </div>
-                <h1 class="text-3xl font-semibold text-white mb-2">WhatsApp for Windows</h1>
-                <p class="text-sm mb-6 leading-relaxed">
-                    Send and receive messages without keeping your phone online.<br>
-                    Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
-                </p>
-                <div class="flex items-center justify-center gap-2 text-xs">
-                    <i class="fa-solid fa-lock text-gray-400"></i>
-                    <span>Your personal messages are end-to-end encrypted</span>
+<div id="rightPanel"
+  class="flex-1 bg-[#0f1316] flex flex-col hidden sm:flex"> <!-- hidden on mobile -->
+
+
+            <!-- DEFAULT WELCOME VIEW -->
+            <div id="welcomeView" class="flex flex-col items-center justify-center h-full text-gray-400">
+                <div class="text-center max-w-lg">
+                    <div class="mb-6">
+                        <i class="fa-brands fa-whatsapp text-[#00A884] text-6xl opacity-40"></i>
+                    </div>
+                    <h1 class="text-3xl font-semibold text-white mb-2">WhatsApp for Windows</h1>
+                    <p class="text-sm mb-6 leading-relaxed">
+                        Send and receive messages without keeping your phone online.<br>
+                        Use WhatsApp on up to 4 linked devices and 1 phone at the same time.
+                    </p>
+                    <div class="flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-lock text-gray-400"></i>
+                        <span>Your personal messages are end-to-end encrypted</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="absolute bottom-4 text-gray-500 text-xs">
-                <i class="fa-regular fa-clock"></i> Last seen today • 8:18 PM
+            <!-- CHAT UI VIEW (Initially hidden) -->
+            <div id="chatView" class="hidden flex-col h-full text-gray-100">
+
+                <!-- Top bar -->
+                <header class="flex items-center gap-4 px-5 py-3 border-b border-gray-800 bg-black/30 backdrop-blur-sm">
+                    <div
+                        class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold">
+                        I
+                    </div>
+                    <div class="min-w-0">
+                        <div id="chatUserName" class="text-sm font-semibold truncate">Aman</div>
+                        <div class="text-xs text-gray-400 truncate">last seen yesterday 4:59 pm</div>
+                    </div>
+
+                    <!-- right icons -->
+                    <div class="ml-auto flex items-center gap-2">
+                        <button class="p-2 rounded-full hover:bg-gray-800/40" title="More">
+                            <i class="fa-solid fa-video text-gray-300"></i>
+                        </button>
+                        <button class="p-2 rounded-full hover:bg-gray-800/40" title="More">
+                            <i class="fa-solid fa-phone text-gray-300"></i>
+                        </button>
+                        <button class="p-2 rounded-full  hover:bg-gray-800/40" title="Search">
+                            <i class="fa-solid fa-magnifying-glass text-gray-300"></i>
+                        </button>
+                        <button class="p-2 rounded-full  hover:bg-gray-800/40" title="More">
+                            <i class="fa-solid fa-ellipsis-vertical text-gray-300"></i>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Messages area -->
+                <main class="flex-1 h-[67vh] overflow-hidden chat-wallpaper">
+                    <div id="messages" class="messages-scroll h-full overflow-y-auto p-6 space-y-4 max-w-4xl mx-auto">
+                        <p class="text-gray-400 text-center text-sm">Start chatting...</p>
+                    </div>
+                </main>
+
+                <!-- Input area -->
+                <form id="composer" class="px-5 py-3 border-t border-gray-800 bg-black/40 backdrop-blur-sm">
+                    <div class="max-w-4xl mx-auto flex items-center gap-3">
+                        <input id="messageInput" autocomplete="off" type="text" placeholder="Type a message"
+                            class="flex-1 rounded-3xl py-3 px-4 bg-gray-800 text-gray-100 placeholder-gray-500 outline-none focus:ring-2 focus:ring-emerald-600 transition" />
+                        <button id="sendBtn" type="button"
+                            class="bg-emerald-600 hover:bg-emerald-700 p-2 rounded-full w-10 h-10 flex items-center justify-center"
+                            title="Send">
+                            <i class="fa-solid fa-paper-plane text-white"></i>
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
+
+
 
     </section>
+
+
+    <script>
+        // handle chat open
+        document.getElementById("showAllUsers").addEventListener("click", function (e) {
+            const clickedUser = e.target.closest(".cursor-pointer");
+            if (!clickedUser) return;
+
+            // user name text
+            const userName = clickedUser.querySelector(".font-semibold").innerText;
+
+            // hide welcome view, show chat view
+            document.getElementById("welcomeView").classList.add("hidden");
+            document.getElementById("chatView").classList.remove("hidden");
+
+            // update chat header
+            document.getElementById("chatUserName").innerText = userName;
+        });
+    </script>
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
 
 </body>
 
