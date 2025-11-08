@@ -214,15 +214,15 @@
 
                 <!-- Messages area -->
                 <main class="flex-1 h-[67vh] overflow-hidden chat-wallpaper">
-                    <div id="messages" class="messages-scroll h-full overflow-y-auto p-6 space-y-4 max-w-4xl mx-auto">
-                        <p class="text-gray-400 text-center text-sm">Start chatting...</p>
+                    <div id="messages" class="messages-scroll h-full overflow-y-auto p-6 space-y-1 max-w-4xl mx-auto">
+                        <p id="startChatting" class="text-gray-400 text-center text-sm">Start chatting...</p>
                     </div>
                 </main>
 
                 <!-- Input area -->
                 <form id="composer" class="px-5 py-3 border-t border-gray-800 bg-black/40 backdrop-blur-sm">
                     <div class="max-w-4xl mx-auto flex items-center gap-3">
-                        <input id="messageInput" autocomplete="off" type="text" placeholder="Type a message"
+                        <input id="messageInput" autocomplete="off" type="text" placeholder="Type a message..."
                             class="flex-1 rounded-3xl py-3 px-4 bg-gray-800 text-gray-100 placeholder-gray-500 outline-none focus:ring-2 focus:ring-emerald-600 transition" />
                         <button id="sendBtn" type="button"
                             class="bg-emerald-600 hover:bg-emerald-700 p-2 rounded-full w-10 h-10 flex items-center justify-center"
@@ -240,23 +240,7 @@
     </section>
 
 
-    <script>
-        // handle chat open
-        document.getElementById("showAllUsers").addEventListener("click", function (e) {
-            const clickedUser = e.target.closest(".cursor-pointer");
-            if (!clickedUser) return;
-
-            // user name text
-            const userName = clickedUser.querySelector(".font-semibold").innerText;
-
-            // hide welcome view, show chat view
-            document.getElementById("welcomeView").classList.add("hidden");
-            document.getElementById("chatView").classList.remove("hidden");
-
-            // update chat header
-            document.getElementById("chatUserName").innerText = userName;
-        });
-    </script>
+  
 
 
 

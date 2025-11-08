@@ -87,6 +87,7 @@ async function fetchUsers() {
 }
 
 
+let receiverId;
 function showUsers(users) {
     const showAllUsers = document.getElementById("showAllUsers");
     showAllUsers.innerHTML = "";
@@ -95,9 +96,8 @@ function showUsers(users) {
         console.log(list);
         const firstLetter = list.name ? list.name.charAt(0).toUpperCase() : "?";
 
-        // Use += to append, not =
         showAllUsers.innerHTML += `
-            <div class="flex items-center gap-3 p-3 border-t-2 border-b-2 border-gray-900 hover:bg-[#ffffff05] rounded cursor-pointer">
+            <div class="flex items-center gap-3 p-3 border-t-2 border-b-2 border-gray-900 hover:bg-[#ffffff05] rounded cursor-pointer" data-userid="${list.id}">
                 <div class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold">
                     ${firstLetter}
                 </div>
@@ -106,10 +106,29 @@ function showUsers(users) {
                         <p class="font-semibold">${list.name}</p>
                         
                         </div>
-                        <p class="text-gray-400 text-sm"> Tap to chat</p>
+                        <p class="text-gray-400 text-sm"> Tap to chat...</p>
                         </div>
                         </div>
                         `;
+    });
+
+    let chatUserName = document.getElementById("chatUserName")
+    let chatView = document.getElementById("chatView")
+    let welcomeView = document.getElementById("welcomeView")
+
+    showAllUsers.addEventListener("click", function (e) {
+        const clickedUser = e.target.closest(".cursor-pointer");
+        if (!clickedUser) return;
+        const userName = clickedUser.querySelector(".font-semibold").innerText;
+        receiverId = clickedUser.dataset.userid
+
+
+        console.log(receiverId, "receiver ki id mil rhi hai");
+
+        welcomeView.classList.add("hidden");
+        chatView.classList.remove("hidden");
+        chatUserName.innerText = userName;
+        loadChat();
     });
 }
 
@@ -118,28 +137,104 @@ fetchUsers()
 
 
 // ==========GET LOGIN USER=============
-
+let currentUserId;
 async function getCurrentUser() {
     const { data, error } = await client.auth.getUser()
     if (error) {
         console.log(error, "getting user error");
     } else {
         console.log(data, "user get Successfully!");
-        console.log(data.user.id);
-        
+        console.log(data.user.id, "currunt user ki id mil rhi hai ");
+        currentUserId = data.user.id;
+
     }
 }
 
 
 getCurrentUser()
 
+// ========start chating==========
+
+const messages = document.getElementById("messages")
+const messageInput = document.getElementById("messageInput")
+const sendBtn = document.getElementById("sendBtn")
+
+sendBtn.addEventListener("click", messageSend)
+
+messageInput.addEventListener("keypress", (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault()
+        messageSend()
+    }
+})
 
 
 
 
-// showAllUsers.addEventListener("click",()=>{
-//     const rightChatApp = 
-// })
+// ===========CURRENT MESSAGE===========
+
+async function messageSend() {
+    const msg = messageInput.value.trim();
+    if (msg !== "" && currentUserId && receiverId) {
+        console.log(receiverId, "id aarhai hai");
+    }
+
+    let msgDiv = document.createElement("div")
+    msgDiv.className = "flex justify-end gap-0"
+
+    msgDiv.innerHTML = `
+         <div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">${msg}</div>
+         `
+    messages.appendChild(msgDiv)
+
+    const startChatting = document.getElementById("startChatting")
+    if (startChatting) startChatting.remove()
+    messages.scrollTop = messages.scrollHeight;
+    messageInput.value = "";
+
+    const { error } = await client
+        .from('Chatting')
+        .insert({ message: msg, sender_id: currentUserId, receiver_id: receiverId, created_at: new Date().toISOString() })
+
+    if (error) {
+        console.log(error, "error in insert chatting table");
+    } else {
+        console.log("successfully insert data in chatting table");
+
+    }
+
+}
+
+
+// ==========loadChat function=========
+async function loadChat() {
+    if (!receiverId || !currentUserId) return;
+
+    const { data, error } = await client
+        .from('Chatting')
+        .select('*')
+        .or(`sender_id.eq.${currentUserId}, receiver_id.eq.${currentUserId}`)
+        .order('created_at', { ascending: true });
+
+    if (error) {
+        console.log(error);
+        return;
+    }
+    messages.innerHTML = ""
+
+    data.forEach((msgs) => {
+
+        if ((msgs.sender_id === currentUserId && msgs.receiver_id === receiverId) || (msgs.sender_id === receiverId && msgs.receiver_id === currentUserId)) {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = msgs.sender_id === currentUserId ? "flex justify-end" : "flex justify-start";
+            msgDiv.innerHTML = `<div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
+                ${msgs.message}
+            </div>`;
+            messages.appendChild(msgDiv);
+        }
+    })
+    messages.scrollTop = messages.scrollHeight;
+}
 
 
 

@@ -6,3 +6,10 @@
 body {
     font-family: "myFont";
 }
+
+.chat-wallpaper{
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4-hS9FM0B-F9ZJGFFbx9nAHP_rITS7ctnIw&s");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
