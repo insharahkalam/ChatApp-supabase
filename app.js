@@ -237,12 +237,50 @@ async function loadChat() {
 }
 
 
+// ==========receiverSIDE MESSAGE========let currentUserId;
 
 
+// get current user first
+async function initChat() {
+    const { data, error } = await client.auth.getUser();
+    if (error) return console.log(error, "getting user error");
+    currentUserId = data.user.id;
+    console.log("Current User ID:", currentUserId);
 
+    // subscribe to realtime after currentUserId is available
+    const chatChannel = client.channel('public:Chatting');
 
+    chatChannel.on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'Chatting' },
+        (payload) => {
+            const msg = payload.new;
 
+            // show message if I am receiver or sender
+            if (msg.receiver_id === currentUserId || msg.sender_id === currentUserId) {
+                const senderIsCurrentUser = msg.sender_id === currentUserId;
+                appendMessage(msg.message, senderIsCurrentUser);
+            }
+        }
+    );
 
+    await chatChannel.subscribe();
+    console.log("Subscribed to Chatting table realtime");
+}
+
+// helper function to append messages
+function appendMessage(msg, isSender) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = isSender ? "flex justify-end" : "flex justify-start";
+    msgDiv.innerHTML = `<div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
+                            ${msg}
+                        </div>`;
+    messages.appendChild(msgDiv);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+// call initChat to start everything
+initChat();
 
 
 
