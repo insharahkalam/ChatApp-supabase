@@ -129,6 +129,7 @@ function showUsers(users) {
         chatView.classList.remove("hidden");
         chatUserName.innerText = userName;
         loadChat();
+        initChat()
     });
 }
 
@@ -208,32 +209,32 @@ async function messageSend() {
 
 // ==========loadChat function=========
 async function loadChat() {
-    if (!receiverId || !currentUserId) return;
+  if (!receiverId || !currentUserId) return;
 
-    const { data, error } = await client
-        .from('Chatting')
-        .select('*')
-        .or(`sender_id.eq.${currentUserId}, receiver_id.eq.${currentUserId}`)
-        .order('created_at', { ascending: true });
+  const { data, error } = await client
+    .from('Chatting')
+    .select('*')
+    .or(`and(sender_id.eq.${currentUserId},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${currentUserId})`)
+    .order('created_at', { ascending: true });
 
-    if (error) {
-        console.log(error);
-        return;
-    }
-    messages.innerHTML = ""
+  if (error) {
+    console.log(error);
+    return;
+  }
 
-    data.forEach((msgs) => {
+  messages.innerHTML = "";
 
-        if ((msgs.sender_id === currentUserId && msgs.receiver_id === receiverId) || (msgs.sender_id === receiverId && msgs.receiver_id === currentUserId)) {
-            const msgDiv = document.createElement("div");
-            msgDiv.className = msgs.sender_id === currentUserId ? "flex justify-end" : "flex justify-start";
-            msgDiv.innerHTML = `<div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
-                ${msgs.message}
-            </div>`;
-            messages.appendChild(msgDiv);
-        }
-    })
-    messages.scrollTop = messages.scrollHeight;
+  data.forEach((msg) => {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = msg.sender_id === currentUserId ? "flex justify-end" : "flex justify-start";
+    msgDiv.innerHTML = `
+      <div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
+        ${msg.message}
+      </div>`;
+    messages.appendChild(msgDiv);
+  });
+
+  messages.scrollTop = messages.scrollHeight;
 }
 
 
@@ -242,42 +243,58 @@ async function loadChat() {
 
 // get current user first
 async function initChat() {
-    const { data, error } = await client.auth.getUser();
-    if (error) return console.log(error, "getting user error");
-    currentUserId = data.user.id;
-    console.log("Current User ID:", currentUserId);
+  const { data, error } = await client.auth.getUser();
+  if (error) return console.log("🚨 Error getting current user:", error.message);
+  
+  currentUserId = data.user.id;
+  console.log("👤 Current User ID:", currentUserId);
 
-    // subscribe to realtime after currentUserId is available
-    const chatChannel = client.channel('public:Chatting');
+  const chatChannel = client.channel("public:Chatting");
 
-    chatChannel.on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'Chatting' },
-        (payload) => {
-            const msg = payload.new;
+  chatChannel.on(
+    "postgres_changes",
+    { event: "INSERT", schema: "public", table: "Chatting" },
+    (payload) => {
+      const msg = payload.new;
+      console.log("📩 Realtime message received:", msg);
 
-            // show message if I am receiver or sender
-            if (msg.receiver_id === currentUserId || msg.sender_id === currentUserId) {
-                const senderIsCurrentUser = msg.sender_id === currentUserId;
-                appendMessage(msg.message, senderIsCurrentUser);
-            }
-        }
-    );
+      // Check if related to current chat
+      if (
+        (msg.sender_id === currentUserId && msg.receiver_id === receiverId) ||
+        (msg.sender_id === receiverId && msg.receiver_id === currentUserId)
+      ) {
+        const senderIsCurrentUser = msg.sender_id === currentUserId;
+        console.log(
+          senderIsCurrentUser
+            ? "👀 Message belongs to me (sender)"
+            : "📬 Message received from other user"
+        );
 
-    await chatChannel.subscribe();
-    console.log("Subscribed to Chatting table realtime");
+        appendMessage(msg.message, senderIsCurrentUser);
+      } else {
+        console.log("⚠️ Message ignored (not for this chat).");
+      }
+    }
+  );
+
+  await chatChannel.subscribe();
+  console.log("✅ Subscribed to realtime Chatting table");
 }
+
 
 // helper function to append messages
 function appendMessage(msg, isSender) {
-    const msgDiv = document.createElement("div");
-    msgDiv.className = isSender ? "flex justify-end" : "flex justify-start";
-    msgDiv.innerHTML = `<div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
-                            ${msg}
-                        </div>`;
-    messages.appendChild(msgDiv);
-    messages.scrollTop = messages.scrollHeight;
+  console.log(`🧱 Appending message: "${msg}" | from: ${isSender ? "Me" : "Other"}`);
+  const msgDiv = document.createElement("div");
+  msgDiv.className = isSender ? "flex justify-end" : "flex justify-start";
+  msgDiv.innerHTML = `
+    <div class="bg-emerald-600 text-white px-4 py-2 rounded-lg max-w-xs break-words">
+      ${msg}
+    </div>`;
+  messages.appendChild(msgDiv);
+  messages.scrollTop = messages.scrollHeight;
 }
+
 
 // call initChat to start everything
 initChat();
