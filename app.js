@@ -518,6 +518,109 @@ const projectKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 const { createClient } = supabase;
 const client = createClient(projectUrl, projectKey);
 
+
+  // ========signup work========
+
+  const username = document.getElementById("username")
+  const email = document.getElementById("email")
+  const password = document.getElementById("password")
+  const btn = document.getElementById("btn")
+
+  btn && btn.addEventListener("click", async () => {
+    const { data, error } = await client.auth.signUp({
+      email: email.value,
+      password: password.value,
+      options: {
+        data: { username: username.value }
+      }
+    })
+    if (data) {
+      console.log(data, "signup successfully!");
+      const { error } = await client
+        .from('user_data')
+        .insert({ username: data.user.user_metadata.username, email: data.user.email })
+      if (error) {
+        console.log(error, "inserting data error");
+      } else {
+        alert("data insert successfully!!")
+        window.location.href = "login.html"
+      }
+    } else {
+      console.log(error, "error in singup");
+    }
+  })
+
+  // ========login work========
+
+  const loginemail = document.getElementById("loginemail")
+  const loginpassword = document.getElementById("loginpassword")
+  const loginbtn = document.getElementById("loginbtn")
+
+  loginbtn && loginbtn.addEventListener("click", async () => {
+    const { data, error } = await client.auth.signInWithPassword({
+      email: loginemail.value,
+      password: loginpassword.value,
+    })
+    if (error) {
+      console.log(error, "error in login");
+    } else {
+      console.log(data, "login successfully!");
+      window.location.href = "chatApp.html"
+    }
+  })
+
+  // ========show users========
+
+  async function fetchUsers() {
+    const { data, error } = await client.from('user_data').select('username, id')
+    if (error) {
+      console.log(error, "Error in fetching users", error.message);
+    } else {
+      console.log(data, "user Fetch Successfully!");
+      showUsers(data)
+    }
+  }
+  
+  function showUsers(users) {
+    const showAllUsers = document.getElementById("showAllUsers");
+    showAllUsers.innerHTML = "";
+
+    users.forEach((list) => {
+      const firstLetter = list.username ? list.username.charAt(0).toUpperCase() : "?";
+      showAllUsers.innerHTML += `
+        <div class="flex items-center gap-3 p-3 border-t-2 border-b-2 border-gray-900 hover:bg-[#ffffff05] rounded cursor-pointer" data-userid="${list.id}">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-tr from-pink-500 to-purple-500 font-bold">
+            ${firstLetter}
+          </div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <p class="font-semibold">${list.username}</p>
+            </div>
+            <p class="text-gray-400 text-sm"> Tap to chat...</p>
+          </div>
+        </div>`;
+    });
+
+    let chatUserName = document.getElementById("chatUserName")
+    let chatView = document.getElementById("chatView")
+    let welcomeView = document.getElementById("welcomeView")
+
+    showAllUsers.addEventListener("click", function (e) {
+      const clickedUser = e.target.closest(".cursor-pointer");
+      if (!clickedUser) return;
+      receiverId = clickedUser.dataset.userid
+      chatUserName.innerText = clickedUser.querySelector(".font-semibold").innerText
+
+      welcomeView.classList.add("hidden")
+      chatView.classList.remove("hidden")
+      loadChat()
+      messageInput.disabled = false
+      sendBtn.disabled = false
+    });
+  }
+
+
+
 // DOM Elements
 const messages = document.getElementById("messages");
 const messageInput = document.getElementById("messageInput");
